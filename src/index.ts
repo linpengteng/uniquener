@@ -43,12 +43,12 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (onlyUpdate === true) {
     try {
-      includes instanceof Array && includes.forEach(key => Cacher.add(key))
-      includes instanceof Set && includes.forEach(key => Cacher.add(key))
+      includes instanceof Array && includes.forEach(key => typeof key === 'string' && Cacher.add(key))
+      includes instanceof Set && includes.forEach(key => typeof key === 'string' && Cacher.add(key))
       listenHandler(new Set(Cacher))
       return ''
     } catch {
-      throw new Error('[Options.includes] is not Iterative or [Options.listenHandler] is Call Error')
+      throw new Error('[Options.listenHandler] is Call Error')
     }
   }
 
@@ -67,19 +67,19 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (includes instanceof Array) {
     try {
-      includes.forEach(key => Cacher.add(key))
+      includes.forEach(key => typeof key === 'string' && Cacher.add(key))
       listenHandler(new Set(Cacher))
     } catch {
-      throw new Error('[Options.includes] is not Iterative  or [Options.listenHandler] is Call Error')
+      throw new Error('[Options.listenHandler] is Call Error')
     }
   }
 
   if (includes instanceof Set) {
     try {
-      includes.forEach(key => Cacher.add(key))
+      includes.forEach(key => typeof key === 'string' && Cacher.add(key))
       listenHandler(new Set(Cacher))
     } catch {
-      throw new Error('[Options.includes] is not Iterative or [Options.listenHandler] is Call Error')
+      throw new Error('[Options.listenHandler] is Call Error')
     }
   }
 
