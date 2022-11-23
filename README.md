@@ -84,7 +84,7 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 默认：(_: Set<string>) => {}
 >
-> 说明：Cacher 每次变动否会调用此函数，可用与服务端同步[现已有 Unique code], options 为 Cacher 副本
+> 说明：Cacher 每次变动则会调用此函数，可用与服务端同步[现已有 Unique code], options 为 Cacher 副本
 
 ## errorHandler - Unique 异常时处理, 常用于修改format进行扩容
 > 类型：(options: Options) => Options;
