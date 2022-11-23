@@ -39,7 +39,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
   let radix = options.radix || 16
   let random = options.random || '?'
   let format = options.format || null
-  let tryCount = options.tryCount || 10
+  let tryCount = typeof options.tryCount === 'number' ? options.tryCount : 10
 
   if (onlyUpdate === true) {
     try {
