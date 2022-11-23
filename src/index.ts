@@ -89,7 +89,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
   const characters = Array.from({ length: 36 }, (_, key) => key.toString(36))
   const appendCacher = Cacher.add.bind(Cacher)
 
-  while (regenerate && tryCount--) {
+  while (regenerate && tryCount-- > 0) {
     const template = format.replace(/\[([^\]]+?)\]/g, (match, group) => {
       if (typeof group === 'string') {
         const caches: Set<string> = new Set()
