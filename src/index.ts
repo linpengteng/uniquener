@@ -98,23 +98,23 @@ const Uniquener: TypeUniquener = (options = {}) => {
       if (typeof group === 'string') {
         const caches: Set<string> = new Set()
         const append = caches.add.bind(caches)
-        const splits = group.toLowerCase().split(/\s*,\s*|\s+/g)
-        const filters = splits.filter(str => /^[a-zA-Z0-9\-*?#]+$/ui.test(str))
-        const isRange = (str: string) => /^[a-zA-Z0-9]-[a-zA-Z0-9]$/.test(str)
+        const splits = group.toLowerCase().split(/\s*,\s*/g)
+        const filters = splits.filter(str => /^[a-zA-Z0-9\s\-*?#]+$/ui.test(str))
+        const isRange = (str: string) => /^\s*[a-zA-Z0-9]\s*-\s*[a-zA-Z0-9]\s*$/.test(str)
 
         const collects = filters.reduce((caches, string) => {
-          if (isRange(string)) {
-            const str1 = string.split('-')[0]
-            const str2 = string.split('-')[1]
-            const key1 = characters.indexOf(str1)
-            const key2 = characters.indexOf(str2)
+          if (isRange(string.trim())) {
+            const str1 = string.trim().split(/\s*-\s*/)[0]
+            const str2 = string.trim().split(/\s*-\s*/)[1]
+            const key1 = characters.indexOf(str1.trim())
+            const key2 = characters.indexOf(str2.trim())
             const first = Math.min(key1, key2)
             const second = Math.max(key1, key2) + 1
             characters.slice(first, second).forEach(append)
           }
 
-          if (!isRange(string)) {
-            append(string)
+          if (!isRange(string.trim())) {
+            append(string.trim())
           }
 
           return caches
