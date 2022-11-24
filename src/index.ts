@@ -131,7 +131,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
     unique = [...template.toLowerCase()]
       .filter(str => /^[a-zA-Z0-9\-*?#]+$/ui.test(str))
-      .map(v => v === random ? (radix !== 26 ? characters[Math.random() * radix | 0] : characters[Math.random() * radix | 0 + 10]) : v)
+      .map(v => v === random ? characters[Math.random() * radix | 0 + (radix === 26 ? 10 : 0)] : v)
       .join('')
       .trim()
 
