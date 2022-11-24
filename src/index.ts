@@ -44,8 +44,8 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (onlyUpdate === true) {
     try {
-      usedUniques instanceof Array && usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
-      usedUniques instanceof Set && usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
+      usedUniques instanceof Array && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
+      usedUniques instanceof Set && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
       return ''
     } catch {
@@ -69,7 +69,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (usedUniques instanceof Array) {
     try {
-      usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
+      usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
     } catch {
       throwErrorHandler(new Set(Cacher))
@@ -79,7 +79,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (usedUniques instanceof Set) {
     try {
-      usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
+      usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
     } catch {
       throwErrorHandler(new Set(Cacher))
