@@ -99,8 +99,30 @@ const Uniquener: TypeUniquener = (options = {}) => {
         const caches: Set<string> = new Set()
         const append = caches.add.bind(caches)
         const splits = group.toLowerCase().split(/\s*,\s*/g)
-        const filters = splits.filter(str => /^[a-zA-Z0-9\s\-*?#]+$/ui.test(str))
+        const filters = splits.filter(str => /^[a-zA-Z0-9\s/|\-*?#=:;]+$/ui.test(str))
         const isRange = (str: string) => /^\s*[a-zA-Z0-9]\s*-\s*[a-zA-Z0-9]\s*$/.test(str)
+        const isTimer = (str: string) => /^\s*timer\s*:\s*(YYYY|MM|DD|HH|mm|ss|iii|:|-|\/|\s)+\s*$/.test(str)
+
+        if (isTimer(group.trim())) {
+          const date = new Date()
+          const year = `${date.getFullYear()}`
+          const month = date.getMonth() + 1 > 9 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`
+          const minute = date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`
+          const second = date.getSeconds() > 9 ? `${date.getSeconds()}` : `0${date.getSeconds()}`
+          const milli = date.getMilliseconds() > 99 ? `${date.getMilliseconds()}` : date.getMilliseconds() > 9 ? `0${date.getMilliseconds()}` : `00${date.getMilliseconds()}`
+          const hours = date.getHours() > 9 ? `${date.getHours()}` : `0${date.getHours()}`
+          const day = date.getDate() > 9 ? `${date.getDate()}` : `0${date.getDate()}`
+
+          return group.trim().replace(/^\s*timer\s*:\s*/, '')
+            .replace(/YYYY/, year)
+            .replace(/MM/, month)
+            .replace(/DD/, day)
+            .replace(/HH/, hours)
+            .replace(/mm/, minute)
+            .replace(/ss/, second)
+            .replace(/iii/, milli)
+            .replace(/\s+/g, ' ')
+        }
 
         const collects = filters.reduce((caches, string) => {
           if (isRange(string.trim())) {
@@ -130,7 +152,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     })
 
     unique = [...template.toLowerCase()]
-      .filter(str => /^[a-zA-Z0-9\-*?#]+$/ui.test(str))
+      .filter(str => /^[a-zA-Z0-9\s/|\-*?#=:;]+$/ui.test(str))
       .map(v => v === random ? characters[Math.random() * radix | 0 + (radix === 26 ? 10 : 0)] : v)
       .join('')
       .trim()

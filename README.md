@@ -3,16 +3,18 @@
 ```javascript
 Uniquener() // 'f26b0ca7-6bc9-5f0d-863e-e867318fc484'
 Uniquener() // '0fbd8373-3072-5b20-9ad8-9d407a45999f'
-Uniquener() // '51da5471-4312-2ed0-b2ad-da16e87b99fd'
 
 Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' }) // 'b682-9ce4-50cc'
 Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' }) // '50f0-9p2b-4421'
-Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' }) // '258b-9o15-70e8'
 
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 10, random: '#' }) // '09f?-3621-??21'
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 16, random: '#' }) // '65f?-25f8-??b8'
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 26, random: '#' }) // 'brf?-e5av-??a1'
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '9u9?-z6ho-??v1'
+
+Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) // 'year=2022;date=2022-11-24 16:24:10:374'
+Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) // 'year=2022;date=2022-11-24 16:24:41:483'
+Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) // 'year=2022;date=2022-11-24 16:24:54:744'
 ```
 
 <br/>
@@ -74,8 +76,9 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 默认：'????????-????-[1-5]???-[8-b]???-????????????'
 >
-> 说明： ? => 进制范围内的值随机生成  
-> 说明：[] => 区间范围内的值随机生成
+> 说明：?     => 进制范围内的值随机生成  
+> 说明：[]    => 区间范围内的值随机生成  
+> 说明：timer => 按时间顺序生成，格式 [timer:xxxx]
 
 ## random - 随机占位符
 > 类型：'?' | '*' | '#'
