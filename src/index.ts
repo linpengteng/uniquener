@@ -5,17 +5,18 @@ type TypeOptions = {
   radix?: 10 | 16 | 36;
   format?: string | null;
   random?: '?' | '*' | '#' | null;
-  includes?: Array<string> | Set<string> | null;
-  listenHandler?: TypeListenHandler | null;
-  errorHandler?: TypeErrorHandler | null;
-  errorListen?: boolean | null;
+  usedUniques?: Array<string> | Set<string> | null;
+  listenCacherHandler?: TypeListenCacherHandler | null;
+  reduplicateHandler?: TypeReduplicateHandler | null;
+  throwErrorHandler?: TypeThrowErrorHandler | null;
+  reduplicateExit?: boolean | null;
   onlyUpdate?: boolean | null;
-  errorExit?: boolean | null;
   tryCount?: number | null;
 }
 type TypeUniquener = (options?: TypeOptions) => string;
-type TypeErrorHandler = (options: TypeOptions) => TypeOptions;
-type TypeListenHandler = (options: Set<string>) => void;
+type TypeListenCacherHandler = (options: Set<string>) => void;
+type TypeReduplicateHandler = (options: TypeOptions) => TypeOptions;
+type TypeThrowErrorHandler = (options: Set<string>) => void;
 
 
 /**
@@ -28,13 +29,13 @@ const Cacher: Set<string> = new Set()
  * Uniquener
  */
 const Uniquener: TypeUniquener = (options = {}) => {
-  const includes = options.includes
-  const errorExit = options.errorExit
   const onlyUpdate = options.onlyUpdate
-  const errorListen = options.errorListen
-  const errorHandler = options.errorHandler
-  const listenHandler = options.listenHandler || ((_: Set<string>) => {})
-  const regenerateExit = errorExit === true || typeof errorHandler !== 'function'
+  const usedUniques = options.usedUniques
+  const reduplicateExit = options.reduplicateExit !== false
+  const throwErrorHandler = options.throwErrorHandler || ((_: Set<string>) => {})
+  const reduplicateHandler = options.reduplicateHandler || ((o: TypeOptions) => o)
+  const listenCacherHandler = options.listenCacherHandler || ((_: Set<string>) => {})
+  const isExitOnRegenerate = reduplicateExit === true || typeof options.reduplicateHandler !== 'function'
 
   let radix = options.radix || 16
   let random = options.random || '?'
@@ -43,12 +44,13 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (onlyUpdate === true) {
     try {
-      includes instanceof Array && includes.forEach(key => typeof key === 'string' && Cacher.add(key))
-      includes instanceof Set && includes.forEach(key => typeof key === 'string' && Cacher.add(key))
-      listenHandler(new Set(Cacher))
+      usedUniques instanceof Array && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      usedUniques instanceof Set && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      listenCacherHandler(new Set(Cacher))
       return ''
     } catch {
-      throw new Error('[Options.listenHandler] is Call Error')
+      throwErrorHandler(new Set(Cacher))
+      throw new Error('[Options.listenCacherHandler] is Call Error')
     }
   }
 
@@ -65,27 +67,29 @@ const Uniquener: TypeUniquener = (options = {}) => {
     format = format.replace(/\?/g, random)
   }
 
-  if (includes instanceof Array) {
+  if (usedUniques instanceof Array) {
     try {
-      includes.forEach(key => typeof key === 'string' && Cacher.add(key))
-      listenHandler(new Set(Cacher))
+      usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      listenCacherHandler(new Set(Cacher))
     } catch {
-      throw new Error('[Options.listenHandler] is Call Error')
+      throwErrorHandler(new Set(Cacher))
+      throw new Error('[Options.listenCacherHandler] is Call Error')
     }
   }
 
-  if (includes instanceof Set) {
+  if (usedUniques instanceof Set) {
     try {
-      includes.forEach(key => typeof key === 'string' && Cacher.add(key))
-      listenHandler(new Set(Cacher))
+      usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      listenCacherHandler(new Set(Cacher))
     } catch {
-      throw new Error('[Options.listenHandler] is Call Error')
+      throwErrorHandler(new Set(Cacher))
+      throw new Error('[Options.listenCacherHandler] is Call Error')
     }
   }
 
   let unique = ''
   let regenerate = true
-  let errorHandlered = false
+  let reduplicateCalled = false
   const characters = Array.from({ length: 36 }, (_, key) => key.toString(36))
   const appendCacher = Cacher.add.bind(Cacher)
 
@@ -134,44 +138,35 @@ const Uniquener: TypeUniquener = (options = {}) => {
       try {
         regenerate = false
         appendCacher(unique)
-        listenHandler(new Set(Cacher))
+        listenCacherHandler(new Set(Cacher))
       } catch {
-        throw new Error('[Options.listenHandler] is Call Error')
+        throwErrorHandler(new Set(Cacher))
+        throw new Error('[Options.listenCacherHandler] is Call Error')
       }
     }
   }
 
-  if (regenerate && regenerateExit) {
-    try {
-      errorListen === true && listenHandler(new Set(Cacher))
-    } catch {
-      throw new Error('[Options.listenHandler] is Call Error')
-    }
-
-    throw new Error('[Uniquener.Cacher] is Range Error')
+  if (regenerate && isExitOnRegenerate) {
+    throwErrorHandler(new Set(Cacher))
+    throw new Error('[Uniquener generate unique] is Reduplicated')
   }
 
-  if (regenerate && !regenerateExit) {
+  if (regenerate && !isExitOnRegenerate) {
     try {
-      const newOptions = errorHandler(options)
-      const overOptions = { errorExit: true }
+      const newOptions = reduplicateHandler(options)
+      const overOptions = { reduplicateExit: true }
 
-      errorHandlered = true
+      reduplicateCalled = true
 
       return Uniquener({
         ...options,
         ...newOptions,
         ...overOptions
       })
-    } catch {}
-
-    try {
-      errorListen === true && !errorHandlered && listenHandler(new Set(Cacher))
     } catch {
-      throw new Error('[Options.listenHandler] is Call Error')
+      !reduplicateCalled && throwErrorHandler(new Set(Cacher))
+      throw new Error(!reduplicateCalled ? '[Options.reduplicateHandler] is Call Error' : '[Uniquener generate unique] is Reduplicated')
     }
-
-    throw new Error(!errorHandlered ? '[Options.errorHandler] is Call Error' : '[Uniquener.Cacher] is Range Error')
   }
 
   return unique
