@@ -98,7 +98,7 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 默认：true
 
-## throwErrorHandler - 抛出异常前处理 (finaly)
+## throwErrorHandler - 抛出异常前处理 (finally)
 > 类型：(options: Set\<string>) => void;
 >
 > 默认：null
