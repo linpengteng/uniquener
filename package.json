@@ -2,7 +2,7 @@
   "name": "uniquener",
   "description": "A unique code generator by format",
   "homepage": "https://github.com/linpengteng/uniquener#readme",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "author": "lin pengteng <china.linpengteng@gmail.com>",
   "keywords": [

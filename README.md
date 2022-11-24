@@ -86,19 +86,19 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 说明：Cacher 每次变动则会调用此函数，可用与服务端同步[Used unique code], options 为 Cacher 副本
 
-## reduplicateHandler - Unique code 重复时调用, 可用于修改format扩容
+## reduplicateHandler - Unique code 重复时, 用于format扩容
 > 类型：(options: Options) => Options;
 >
 > 默认：null
 >
 > 说明：函数中 options 并非拷贝，而是直接引用 Uniquener Options。注：仅在 reduplicateExit 为 false 时启用
 
-## reduplicateExit - Unique code 重复时调用, 是否抛出异常
+## reduplicateExit - Unique code 重复时, 是否抛出异常
 > 类型：boolean
 >
 > 默认：true
 
-## throwErrorHandler - 抛出异常前处理，但不会终止异常的抛出
+## throwErrorHandler - 抛出异常前处理 (finaly)
 > 类型：(options: Set\<string>) => void;
 >
 > 默认：null
