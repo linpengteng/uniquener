@@ -11,12 +11,13 @@ Uniquener({ format: '????-9[a-f]??-???[1,8,a,c]' }) // '59d6-9f96-1fe8'
 
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 10, random: '#' }) // '09f?-3621-??21'
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 16, random: '#' }) // '65f?-25f8-??b8'
+Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 26, random: '#' }) // 'brf?-e5av-??a1'
 Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '9u9?-z6ho-??v1'
 ```
 
 <br/>
 
-# Install
+# Installation
 ```bash
   yarn add uniquener
   pnpm add uniquener
@@ -24,8 +25,17 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 
 <br/>
 
+# Browser
+```html
+  <script src="https://linpengteng.github.io/resource/uniquener/index.browser.js"></script>
+```
+
+<br/>
+
 # Usage
 ```javascript
+  import Uniquener from 'uniquener'
+
   Uniquener({
     radix: 16,
     random: '?',
@@ -51,16 +61,18 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 
 # API - Uniquener Options
 ## radix - 进制数
-> 类型：10 | 16 | 36
+> 类型：10 | 16 | 26 | 36
 >
 > 默认：16
+>
+> 说明：10 -> 0-9; 16 -> 0-f; 26 -> a-z; 36 -> 0-9 and a-z;
 
 ## format - 模版格式
 > 类型：string
 >
 > 默认：'????????-????-[1-5]???-[8-b]???-????????????'
 
-## random - 占位符
+## random - 随机占位符
 > 类型：'?' | '*' | '#' 
 >
 > 默认：'?'
@@ -86,7 +98,7 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 说明：Cacher 每次变动则会调用此函数，可用与服务端同步[Used unique code], options 为 Cacher 副本
 
-## reduplicateHandler - Unique code 重复时, 用于format扩容
+## reduplicateHandler - Unique code 重复时, 扩容 format
 > 类型：(options: Options) => Options;
 >
 > 默认：null

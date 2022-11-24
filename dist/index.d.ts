@@ -2,7 +2,7 @@
  * Type
  */
 type TypeOptions = {
-    radix?: 10 | 16 | 36;
+    radix?: 10 | 16 | 26 | 36;
     format?: string | null;
     random?: '?' | '*' | '#' | null;
     usedUniques?: Array<string> | Set<string> | null;

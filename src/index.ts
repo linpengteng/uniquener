@@ -2,7 +2,7 @@
  * Type
  */
 type TypeOptions = {
-  radix?: 10 | 16 | 36;
+  radix?: 10 | 16 | 26 | 36;
   format?: string | null;
   random?: '?' | '*' | '#' | null;
   usedUniques?: Array<string> | Set<string> | null;
@@ -54,7 +54,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     }
   }
 
-  if (![10, 16, 36].includes(radix)) {
+  if (![10, 16, 26, 36].includes(radix)) {
     radix = 16
   }
 
@@ -131,7 +131,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
     unique = [...template.toLowerCase()]
       .filter(str => /^[a-zA-Z0-9\-*?#]+$/ui.test(str))
-      .map(v => v === random ? characters[Math.random() * radix | 0] : v)
+      .map(v => v === random ? (radix !== 26 ? characters[Math.random() * radix | 0] : characters[Math.random() * radix | 0 + 10]) : v)
       .join('')
       .trim()
 
