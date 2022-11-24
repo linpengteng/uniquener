@@ -76,9 +76,16 @@ Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) 
 >
 > 默认：'????????-????-[1-5]???-[8-b]???-????????????'
 >
-> 说明：?     => 进制范围内的值随机生成  
-> 说明：[]    => 区间范围内的值随机生成  
-> 说明：timer => 按时间顺序生成，格式 [timer:xxxx]
+> 说明：? => 进制范围内的值随机生成  
+> 说明：[] => 区间范围内的值随机生成  
+> 说明：timer => 按时间顺序生成，格式 [timer:xxxx]  
+> timer: YYYY: 年  
+> timer: MM: 月  
+> timer: DD: 天  
+> timer: HH: 时  
+> timer: mm: 分  
+> timer: ss: 秒  
+> timer: iii: 毫秒  
 
 ## random - 随机占位符
 > 类型：'?' | '*' | '#'
