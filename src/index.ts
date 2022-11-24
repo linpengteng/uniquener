@@ -101,10 +101,11 @@ const Uniquener: TypeUniquener = (options = {}) => {
         const splits = group.toLowerCase().split(/\s*,\s*/g)
         const filters = splits.filter(str => /^[a-zA-Z0-9\s/|\-*?#=:;]+$/ui.test(str))
         const isRange = (str: string) => /^\s*[a-zA-Z0-9]\s*-\s*[a-zA-Z0-9]\s*$/.test(str)
-        const isTimer = (str: string) => /^\s*timer\s*:\s*(YYYY|MM|DD|HH|mm|ss|iii|:|-|\/|\s)+\s*$/.test(str)
+        const isTime = (str: string) => /^\s*time\s*:\s*(YYYY|MM|DD|HH|mm|ss|iii|stamp|:|-|\||\/|\s)+\s*$/.test(str)
 
-        if (isTimer(group.trim())) {
+        if (isTime(group.trim())) {
           const date = new Date()
+          const time = `${date.getTime()}`
           const year = `${date.getFullYear()}`
           const month = date.getMonth() + 1 > 9 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`
           const minute = date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`
@@ -113,14 +114,16 @@ const Uniquener: TypeUniquener = (options = {}) => {
           const hours = date.getHours() > 9 ? `${date.getHours()}` : `0${date.getHours()}`
           const day = date.getDate() > 9 ? `${date.getDate()}` : `0${date.getDate()}`
 
-          return group.trim().replace(/^\s*timer\s*:\s*/, '')
-            .replace(/YYYY/, year)
-            .replace(/MM/, month)
-            .replace(/DD/, day)
-            .replace(/HH/, hours)
-            .replace(/mm/, minute)
-            .replace(/ss/, second)
-            .replace(/iii/, milli)
+          return group.trim()
+            .replace(/^\s*time\s*:\s*/, '')
+            .replace(/stamp/g, time)
+            .replace(/YYYY/g, year)
+            .replace(/MM/g, month)
+            .replace(/DD/g, day)
+            .replace(/HH/g, hours)
+            .replace(/mm/g, minute)
+            .replace(/ss/g, second)
+            .replace(/iii/g, milli)
             .replace(/\s+/g, ' ')
         }
 

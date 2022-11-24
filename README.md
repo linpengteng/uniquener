@@ -1,20 +1,55 @@
 # A unique code generator
 
 ```javascript
-Uniquener() // 'f26b0ca7-6bc9-5f0d-863e-e867318fc484'
-Uniquener() // '0fbd8373-3072-5b20-9ad8-9d407a45999f'
+/**
+ * ouput:
+ *  'f26b0ca7-6bc9-5f0d-863e-e867318fc484'
+ *  '0fbd8373-3072-5b20-9ad8-9d407a45999f'
+ */
+Uniquener()
+Uniquener()
 
-Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' }) // 'b682-9ce4-50cc'
-Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' }) // '50f0-9p2b-4421'
+/**
+ * ouput:
+ *  'b682-9ce4-50cc'
+ *  '50f0-9p2b-4421'
+ */
+Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' })
+Uniquener({ format: '????-9[a-f,o,p,q]??-???[1,8,a,c]' })
 
-Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 10, random: '#' }) // '09f?-3621-??21'
-Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 16, random: '#' }) // '65f?-25f8-??b8'
-Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 26, random: '#' }) // 'brf?-e5av-??a1'
-Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '9u9?-z6ho-??v1'
+/**
+ * ouput:
+ *  '20221125030308622|stamp:1669316588622'
+ *  '2022-11-25 03:04:51:983|stamp:1669316691983'
+ *  '2022-11-25-03-05-20-560|stamp:1669316720560'
+ */
+Uniquener({ format: '[time:YYYYMMDDHHmmssiii]|stamp:[time:stamp]' })
+Uniquener({ format: '[time:YYYY-MM-DD HH:mm:ss:iii]|stamp:[time:stamp]' })
+Uniquener({ format: '[time:YYYY-MM-DD-HH-mm-ss-iii]|stamp:[time:stamp]' })
 
-Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) // 'year=2022;date=2022-11-24 16:24:10:374'
-Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) // 'year=2022;date=2022-11-24 16:24:41:483'
-Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) // 'year=2022;date=2022-11-24 16:24:54:744'
+/**
+ * ouput:
+ *  '3793-1f?-572-??08'
+ *  'e2b1-ef?-61d-??58'
+ *  'rqff-q9?-5fq-??e8'
+ *  'b2s5-c9?-5xj-??m8'
+ */
+Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 10, random: '#' })
+Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 16, random: '#' })
+Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 26, random: '#' })
+Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
+```
+
+<br/>
+
+# Run View
+> [https://linpengteng.github.io/example/uniquener](https://linpengteng.github.io/example/uniquener)
+
+<br/>
+
+# Browser
+```html
+  <script src="https://linpengteng.github.io/resource/uniquener/index.browser.js"></script>
 ```
 
 <br/>
@@ -23,13 +58,6 @@ Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) 
 ```bash
   yarn add uniquener
   pnpm add uniquener
-```
-
-<br/>
-
-# Browser
-```html
-  <script src="https://linpengteng.github.io/resource/uniquener/index.browser.js"></script>
 ```
 
 <br/>
@@ -76,16 +104,17 @@ Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) 
 >
 > 默认：'????????-????-[1-5]???-[8-b]???-????????????'
 >
-> 说明：? => 进制范围内的值随机生成  
-> 说明：[] => 区间范围内的值随机生成  
-> 说明：timer => 按时间顺序生成，格式 [timer:xxxx]  
-> timer: YYYY: 年  
-> timer: MM: 月  
-> timer: DD: 天  
-> timer: HH: 时  
-> timer: mm: 分  
-> timer: ss: 秒  
-> timer: iii: 毫秒  
+> 注1：? => 进制范围内的值随机生成  
+> 注2：[] => 区间范围内的值随机生成  
+> 注3：[time:xxx] => 按时间顺序生成   
+[time:YYYY] 年  
+[time:MM] 月  
+[time:DD] 天  
+[time:HH] 时  
+[time:mm] 分  
+[time:ss] 秒  
+[time:iii] 毫秒  
+[time:stamp] 时间戳  
 
 ## random - 随机占位符
 > 类型：'?' | '*' | '#'
@@ -99,7 +128,7 @@ Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) 
 >
 > 说明：尝试 tryCount 次生成还重复时，则调用 reduplicateHandler 或 抛出异常
 
-## usedUniques - 储存已使用的 Unique code
+## usedUniques -已使用过的 Unique code
 > 类型：Array\<string> | Set\<string>
 >
 > 默认：null
@@ -140,7 +169,7 @@ Uniquener({ format: 'year=[timer:YYYY];date=[timer:YYYY-MM-DD HH:mm:ss:iii]' }) 
 > 默认：false
 >
 > 说明：值为 true 时，会调用 listenCacherHandler  
-> 注意：Uniquener 不参与生成，返回空字符串
+> 注意：Uniquener 不参与生成，会返回空字符串
 
 <br/>
 
