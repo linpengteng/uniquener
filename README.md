@@ -53,8 +53,7 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 <br/>
 
 # API - Uniquener Cacher
-> 存储 Unique code 缓存区（Set\<string\>）, 不可直接引用
->
+> 存储 Unique code 缓存区（Set\<string\>）, 不可直接引用  
 > 每次 Uniquener 新生成，都会调用 listenCacherHandler 传输 Cacher 副本
 
 <br/>
@@ -64,8 +63,11 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 > 类型：10 | 16 | 26 | 36
 >
 > 默认：16
->
-> 说明：10 -> 0-9; 16 -> 0-f; 26 -> a-z; 36 -> 0-9 and a-z;
+> 
+> 值 10：0-9;  
+> 值 16：0-9 And a-f;  
+> 值 26：a-z;  
+> 值 36：0-9 And a-z;
 
 ## format - 模版格式
 > 类型：string
@@ -73,7 +75,7 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 > 默认：'????????-????-[1-5]???-[8-b]???-????????????'
 
 ## random - 随机占位符
-> 类型：'?' | '*' | '#' 
+> 类型：'?' | '*' | '#'
 >
 > 默认：'?'
 
@@ -96,14 +98,16 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 默认：(_: Set<string>) => {}
 >
-> 说明：Cacher 每次变动则会调用此函数，可用与服务端同步[Used unique code], options 为 Cacher 副本
+> 说明：Cacher 每次变动则会调用此函数，同步服务端 [Used unique code]  
+> 注意：options 为 Cacher 副本
 
 ## reduplicateHandler - Unique code 重复时, 扩容 format
 > 类型：(options: Options) => Options;
 >
 > 默认：null
 >
-> 说明：函数中 options 并非拷贝，而是直接引用 Uniquener Options。注：仅在 reduplicateExit 为 false 时启用
+> 说明：函数中 options 并非拷贝，而是引用 Uniquener Options  
+> 注意：仅在 reduplicateExit 为 false 时启用
 
 ## reduplicateExit - Unique code 重复时, 是否抛出异常
 > 类型：boolean
@@ -122,7 +126,8 @@ Uniquener({ format: '##[9,f]?-#[5-6]##-??#[1,8]', radix: 36, random: '#' }) // '
 >
 > 默认：false
 >
-> 说明：值为 true 时，会调用 listenCacherHandler，而 Uniquener 不参与生成，返回空字符串
+> 说明：值为 true 时，会调用 listenCacherHandler  
+> 注意：Uniquener 不参与生成，返回空字符串
 
 <br/>
 
