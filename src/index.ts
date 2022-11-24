@@ -22,7 +22,7 @@ type TypeThrowErrorHandler = (options: Set<string>) => void;
 /**
  * Cacher
  */
-const Cacher: Set<string> = new Set()
+const Cacher: Set<string> = new Set([''])
 
 
 /**
@@ -44,8 +44,8 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (onlyUpdate === true) {
     try {
-      usedUniques instanceof Array && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
-      usedUniques instanceof Set && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      usedUniques instanceof Array && usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
+      usedUniques instanceof Set && usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
       listenCacherHandler(new Set(Cacher))
       return ''
     } catch {
@@ -69,7 +69,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (usedUniques instanceof Array) {
     try {
-      usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
       listenCacherHandler(new Set(Cacher))
     } catch {
       throwErrorHandler(new Set(Cacher))
@@ -79,7 +79,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
 
   if (usedUniques instanceof Set) {
     try {
-      usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key))
+      usedUniques.forEach(key => typeof key === 'string' && key.trim() && Cacher.add(key))
       listenCacherHandler(new Set(Cacher))
     } catch {
       throwErrorHandler(new Set(Cacher))
@@ -133,6 +133,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
       .filter(str => /^[a-zA-Z0-9\-*?#]+$/ui.test(str))
       .map(v => v === random ? characters[Math.random() * radix | 0] : v)
       .join('')
+      .trim()
 
     if (!Cacher.has(unique)) {
       try {
