@@ -70,6 +70,7 @@ Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
     radix: 16,
     random: '?',
     format: '????????-????-[1-5]???-[8-b]???-????????????',
+    algorithm: 'Math.random',
     usedUniques: null,
     listenCacherHandler: null,
     reduplicateHandler: null,
@@ -120,6 +121,13 @@ Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
 > 类型：'?' | '*' | '#'
 >
 > 默认：'?'
+
+## algorithm - 随机所用算法
+> 类型：'Math.random' | 'crypto.getRandomValues'
+>
+> 默认：'Math.random'
+>
+> 说明：在 Node 中使用 crypto.getRandomValues，需 node 版本 >= 17.4.0
 
 ## tryCount - 尝试重新生成的次数
 > 类型：number+

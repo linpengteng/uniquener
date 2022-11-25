@@ -1,10 +1,21 @@
+import crypto from 'crypto'
+
+
 /**
  * Type
  */
-type TypeOptions = {
+type TypeRandomizeOptions = {
+  algorithm?: 'Math.random' | 'crypto.getRandomValues' | null;
+  bytes: string[];
+  max: number;
+  min: number;
+}
+
+type TypeUniquenerOptions = {
   radix?: 10 | 16 | 26 | 36;
   format?: string | null;
   random?: '?' | '*' | '#' | null;
+  algorithm?: 'Math.random' | 'crypto.getRandomValues' | null;
   usedUniques?: Array<string> | Set<string> | null;
   listenCacherHandler?: TypeListenCacherHandler | null;
   reduplicateHandler?: TypeReduplicateHandler | null;
@@ -13,10 +24,13 @@ type TypeOptions = {
   onlyUpdate?: boolean | null;
   tryCount?: number | null;
 }
-type TypeUniquener = (options?: TypeOptions) => string;
-type TypeListenCacherHandler = (options: Set<string>) => void;
-type TypeReduplicateHandler = (options: TypeOptions) => TypeOptions;
-type TypeThrowErrorHandler = (options: Set<string>) => void;
+
+type TypeCacherOptions = Set<string>
+type TypeListenCacherHandler = (options: TypeCacherOptions) => void;
+type TypeReduplicateHandler = (options: TypeUniquenerOptions) => TypeUniquenerOptions;
+type TypeThrowErrorHandler = (options: TypeCacherOptions) => void;
+type TypeUniquener = (options?: TypeUniquenerOptions) => string;
+type TypeRandomize = (options: TypeRandomizeOptions) => string;
 
 
 /**
@@ -29,12 +43,13 @@ const Cacher: Set<string> = new Set([''])
  * Uniquener
  */
 const Uniquener: TypeUniquener = (options = {}) => {
+  const algorithm = options.algorithm
   const onlyUpdate = options.onlyUpdate
   const usedUniques = options.usedUniques
   const reduplicateExit = options.reduplicateExit !== false
-  const throwErrorHandler = options.throwErrorHandler || ((_: Set<string>) => {})
-  const reduplicateHandler = options.reduplicateHandler || ((o: TypeOptions) => o)
-  const listenCacherHandler = options.listenCacherHandler || ((_: Set<string>) => {})
+  const throwErrorHandler = options.throwErrorHandler || ((_: TypeCacherOptions) => {})
+  const reduplicateHandler = options.reduplicateHandler || ((o: TypeUniquenerOptions) => o)
+  const listenCacherHandler = options.listenCacherHandler || ((_: TypeCacherOptions) => {})
   const isExitOnRegenerate = reduplicateExit === true || typeof options.reduplicateHandler !== 'function'
 
   let radix = options.radix || 16
@@ -90,8 +105,20 @@ const Uniquener: TypeUniquener = (options = {}) => {
   let unique = ''
   let regenerate = true
   let reduplicateCalled = false
+  const byteOffset = radix === 26 ? 10 : 0
   const characters = Array.from({ length: 36 }, (_, key) => key.toString(36))
   const appendCacher = Cacher.add.bind(Cacher)
+
+  const randomizer: TypeRandomize = opt => {
+    const min = opt.min
+    const max = opt.max
+    const bytes = opt.bytes
+    const algorithm = opt.algorithm
+
+    return algorithm === 'crypto.getRandomValues'
+      ? bytes[crypto.getRandomValues(new Uint8Array(1))[0] % (max - min + 1) + min | 0]
+      : bytes[Math.random() * (max - min + 1) + min | 0]
+  }
 
   while (regenerate && tryCount-- > 0) {
     const template = format.replace(/\[([^\]]+?)\]/g, (match, group) => {
@@ -146,17 +173,25 @@ const Uniquener: TypeUniquener = (options = {}) => {
         }, caches)
 
         const temp = Array.from(collects)
-        const array = temp.filter(every => !!every)
-        const index = Math.random() * array.length | 0
+        const bytes = temp.filter(every => !!every)
 
-        return array[index] || ''
+        return randomizer({
+          bytes,
+          algorithm,
+          max: bytes.length - 1,
+          min: 0
+        })
       }
       return match
     })
 
+    const min = 0
+    const max = radix - 1
+    const bytes = characters.slice(byteOffset)
+
     unique = [...template.toLowerCase()]
       .filter(str => /^[a-zA-Z0-9\s/|\-*?#=:;]+$/ui.test(str))
-      .map(v => v === random ? characters[Math.random() * radix | 0 + (radix === 26 ? 10 : 0)] : v)
+      .map(v => v === random ? randomizer({ bytes, algorithm, max, min }) : v)
       .join('')
       .trim()
 

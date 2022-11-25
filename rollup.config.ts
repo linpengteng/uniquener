@@ -18,7 +18,10 @@ export default defineConfig([
         exports: 'auto',
         sourcemap: false,
         entryFileNames: '[name].browser.js',
-        chunkFileNames: '[name]-[hash].browser.js'
+        chunkFileNames: '[name]-[hash].browser.js',
+        globals: {
+          crypto: 'crypto'
+        }
       },
       {
         dir: 'dist',
@@ -40,6 +43,9 @@ export default defineConfig([
     plugins: [
       typescript({ sourceMap: false }),
       terser()
+    ],
+    external: [
+      'crypto'
     ]
   },
 
