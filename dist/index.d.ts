@@ -1,5 +1,5 @@
 type TypeUniquenerOptions = {
-    radix?: 10 | 16 | 26 | 36;
+    radix?: 2 | 8 | 10 | 16 | 26 | 36;
     format?: string | null;
     random?: '?' | '*' | '#' | null;
     algorithm?: 'Math.random' | 'crypto.getRandomValues' | null;
