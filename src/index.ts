@@ -69,7 +69,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     }
   }
 
-  if (![10, 16, 26, 36].includes(radix)) {
+  if (![2, 8, 10, 16, 26, 36].includes(radix)) {
     radix = 16
   }
 
@@ -82,7 +82,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     format = format.replace(/\?/g, random)
   }
 
-  if (usedUniques instanceof Array) {
+  if (usedUniques instanceof Set) {
     try {
       usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
@@ -92,7 +92,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     }
   }
 
-  if (usedUniques instanceof Set) {
+  if (usedUniques instanceof Array) {
     try {
       usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
