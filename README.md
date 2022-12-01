@@ -1,4 +1,4 @@
-# A unique code generator
+# A unique code generator <span style="margin-left: 5px; font-size: 20px;">[(README.en.md)](https://github.com/linpengteng/uniquener/blob/main/README.en.md)</span>
 
 <p align="left">
   <a href="https://www.npmjs.com/package/uniquener"><img src="https://img.shields.io/npm/v/uniquener.svg" alt="npm package"></a>
@@ -152,13 +152,13 @@ Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
 >
 > 说明：调用 Uniquener 时会储存至 Uniquener Cacher 中
 
-## listenCacherHandler - Unique Cacher 监听器
+## listenCacherHandler - Uniquener Cacher 监听器
 > 类型：(options: Set\<string>) => void;
 >
 > 默认：(_: Set<string>) => {}
 >
 > 说明：Cacher 每次变动则会调用此函数，同步服务端 [Used unique code]  
-> 注意：options 为 Cacher 副本
+> 注意：options 为 Uniquener Cacher 副本
 
 ## reduplicateHandler - Unique code 重复时, 扩容 format
 > 类型：(options: Options) => Options;
@@ -178,9 +178,9 @@ Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
 >
 > 默认：null
 >
-> 说明：options 为 Cacher 副本
+> 说明：options 为 Uniquener Cacher 副本
 
-## onlyUpdate - 是否仅更新 Unique Cacher
+## onlyUpdate - 是否仅更新 Uniquener Cacher
 > 类型：boolean
 >
 > 默认：false
