@@ -102,12 +102,12 @@ Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
 >
 > default: 16
 > 
-> note1：2 -> 0-1;  
-> note1：8 -> 0-7;  
-> note1：10 -> 0-9;  
-> note1：16 -> 0-9 And a-f;  
-> note1：26 -> a-z;  
-> note1：36 -> 0-9 And a-z;
+> note：2 -> 0-1;  
+> note：8 -> 0-7;  
+> note：10 -> 0-9;  
+> note：16 -> 0-9 And a-f;  
+> note：26 -> a-z;  
+> note：36 -> 0-9 And a-z;
 
 ## format - Template format
 > type：string
