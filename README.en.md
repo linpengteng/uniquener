@@ -185,7 +185,7 @@ Uniquener({ format: '####-#[9,f]?-[5-6]##-??#[1,8]', radix: 36, random: '#' })
 >
 > default：false
 >
-> note：When the value is true, listenCacherHandler will be called
+> note：When the value is true, listenCacherHandler will be called  
 > note：Uniquener does not participate in the generation, and will return an empty string
 
 <br/>
