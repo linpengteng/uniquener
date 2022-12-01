@@ -1,4 +1,4 @@
-# A unique code generator <span style="margin-left: 5px; font-size: 20px;">[(README.en.md)](https://github.com/linpengteng/uniquener/blob/main/README.en.md)</span>
+# A unique code generator <span style="margin-left: 5px; font-size: 16px;">[(README.en.md)](https://github.com/linpengteng/uniquener/blob/main/README.en.md)</span>
 
 <p align="left">
   <a href="https://www.npmjs.com/package/uniquener"><img src="https://img.shields.io/npm/v/uniquener.svg" alt="npm package"></a>
