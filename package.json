@@ -58,5 +58,11 @@
   "engines": {
     "node": ">=16.0.0",
     "pnpm": ">=7"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "cz-customizable@7.0.0": "patches/cz-customizable@7.0.0.patch",
+      "@rollup/plugin-terser@0.2.0": "patches/@rollup__plugin-terser@0.2.0.patch"
+    }
   }
 }
