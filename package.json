@@ -2,15 +2,15 @@
   "name": "uniquener",
   "description": "A unique code generator by format",
   "homepage": "https://github.com/linpengteng/uniquener#readme",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "license": "MIT",
   "author": "lin pengteng <china.linpengteng@gmail.com>",
   "keywords": [
     "uuid",
-    "uuid format",
-    "uuid generator",
-    "unique generator",
-    "unique code"
+    "uuid-format",
+    "uuid-generator",
+    "unique-generator",
+    "unique-code"
   ],
   "files": [
     "dist"
@@ -39,7 +39,7 @@
     "@types/node": "^18.11.12",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
-    "cz-message-helper": "^1.1.1",
+    "cz-message-helper": "^1.1.8",
     "eslint": "^8.29.0",
     "eslint-plugin-vue": "^9.8.0",
     "husky": "^8.0.2",
