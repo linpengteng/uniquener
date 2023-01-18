@@ -18,9 +18,8 @@ export default {
       statements: 95
     }
   },
-  collectCoverageFrom: [
-    'src/**/*.ts'
-  ],
+  collectCoverageFrom: ['src/**/*.ts'],
+  coverageReporters: ['html', 'json', 'text'],
   coverageDirectory: '.coverage',
   coverageProvider: 'babel',
   collectCoverage: true
