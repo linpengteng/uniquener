@@ -12,10 +12,10 @@ export default {
   moduleFileExtensions: ['js', 'ts'],
   coverageThreshold: {
     global: {
-      lines: 80,
-      branches: 65,
-      functions: 75,
-      statements: 80
+      lines: 95,
+      branches: 85,
+      functions: 85,
+      statements: 95
     }
   },
   collectCoverageFrom: [

@@ -31,6 +31,11 @@ describe('Test Uniquener radix Option: ', () => {
     const options: any = { radix: 8 }
     expect(Uniquener(options)).toMatch(/[0-8]{8}-[0-8]{4}-[1-5][0-8]{3}-[8-b][0-8]{3}-[0-8]{12}/)
   })
+
+  test('When radix is 26', () => {
+    const options: any = { radix: 26 }
+    expect(Uniquener(options)).toMatch(isMatchRegex)
+  })
 })
 
 
@@ -152,8 +157,13 @@ describe('Test Uniquener reduplicateExit Option: ', () => {
 
 
 describe('Test Uniquener onlyUpdate Option: ', () => {
-  test('When onlyUpdate is true', () => {
-    const options: any = { onlyUpdate: true }
+  test('When onlyUpdate is true And usedUniques is Set', () => {
+    const options: any = { onlyUpdate: true, usedUniques: new Set(['test-set-xxxxxxx']) }
+    expect(Uniquener(options)).toBe('')
+  })
+
+  test('When onlyUpdate is true And usedUniques is Array', () => {
+    const options: any = { onlyUpdate: true, usedUniques: ['test-set-xxxxxxx'] }
     expect(Uniquener(options)).toBe('')
   })
 

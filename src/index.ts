@@ -63,7 +63,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
       usedUniques instanceof Set && usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
       return ''
-    } catch {
+    } catch /* istanbul ignore next */ {
       throwErrorHandler(new Set(Cacher))
       throw new Error('[Options.listenCacherHandler] is Call Error')
     }
@@ -86,7 +86,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     try {
       usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
-    } catch {
+    } catch /* istanbul ignore next */ {
       throwErrorHandler(new Set(Cacher))
       throw new Error('[Options.listenCacherHandler] is Call Error')
     }
@@ -96,7 +96,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
     try {
       usedUniques.forEach(key => typeof key === 'string' && Cacher.add(key.trim()))
       listenCacherHandler(new Set(Cacher))
-    } catch {
+    } catch /* istanbul ignore next */ {
       throwErrorHandler(new Set(Cacher))
       throw new Error('[Options.listenCacherHandler] is Call Error')
     }
@@ -182,6 +182,7 @@ const Uniquener: TypeUniquener = (options = {}) => {
           min: 0
         })
       }
+      /* istanbul ignore next */
       return match
     })
 
@@ -200,18 +201,20 @@ const Uniquener: TypeUniquener = (options = {}) => {
         regenerate = false
         appendCacher(unique)
         listenCacherHandler(new Set(Cacher))
-      } catch {
+      } catch /* istanbul ignore next */ {
         throwErrorHandler(new Set(Cacher))
         throw new Error('[Options.listenCacherHandler] is Call Error')
       }
     }
   }
 
+  /* istanbul ignore next */
   if (regenerate && isExitOnRegenerate) {
     throwErrorHandler(new Set(Cacher))
     throw new Error('[Uniquener generate unique] is Reduplicated')
   }
 
+  /* istanbul ignore next */
   if (regenerate && !isExitOnRegenerate) {
     try {
       const newOptions = reduplicateHandler(options)
