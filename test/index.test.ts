@@ -11,11 +11,11 @@ const isMatchRegex = /[a-z0-9]{8}-[a-z0-9]{4}-[1-5][a-z0-9]{3}-[8-b][a-z0-9]{3}-
  * Test Unit
  */
 describe('Test Uniquener empty Options: ', () => {
-  test('When no options', () => {
+  test('When Options is undefined', () => {
     expect(Uniquener()).toMatch(isMatchRegex)
   })
 
-  test('When empty options', () => {
+  test('When Options is empty Object', () => {
     expect(Uniquener({})).toMatch(isMatchRegex)
   })
 })
