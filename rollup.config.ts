@@ -1,6 +1,7 @@
 import { defineConfig } from 'rollup'
 import typescript from '@rollup/plugin-typescript'
 import terser from '@rollup/plugin-terser'
+import babel from '@rollup/plugin-babel'
 import dts from 'rollup-plugin-dts'
 
 
@@ -22,7 +23,25 @@ export default defineConfig([
         globals: {
           crypto: 'crypto'
         }
-      },
+      }
+    ],
+    plugins: [
+      typescript({ sourceMap: false }),
+      terser(),
+      babel({
+        extensions: ['.ts'],
+        babelHelpers: 'bundled',
+        exclude: ['node_modules']
+      })
+    ],
+    external: [
+      'crypto'
+    ]
+  },
+
+  {
+    input: 'src/index.ts',
+    output: [
       {
         dir: 'dist',
         format: 'cjs',
@@ -48,6 +67,7 @@ export default defineConfig([
       'crypto'
     ]
   },
+
   {
     input: 'src/index.ts',
     output: {
