@@ -2,7 +2,7 @@
   "name": "uniquener",
   "description": "A unique code generator by format",
   "homepage": "https://github.com/linpengteng/uniquener#readme",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "license": "MIT",
   "author": "lin pengteng <china.linpengteng@gmail.com>",
   "keywords": [
@@ -21,7 +21,8 @@
   "browser": "./dist/index.browser.js",
   "scripts": {
     "test": "jest --coverage",
-    "build": "shx rm -rf dist && rollup --config rollup.config.ts --configPlugin typescript"
+    "build": "shx rm -rf dist && rollup --config rollup.config.ts --configPlugin typescript",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -57,7 +58,7 @@
     "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-polyfill-node": "^0.12.0",
     "shx": "^0.3.4",
-    "ts-jest": "^29.1.0",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"
   },
   "config": {
